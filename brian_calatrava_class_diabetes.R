@@ -1,14 +1,20 @@
-install.packages("dplyr")
-library(dplyr)
+#Referencias
+#Jairo Ayala. (2019). Minería de datos. Recuperado de https://rpubs.com/JairoAyala/601703
+#Ronald Delgado. (2018). Introducción a la Validación Cruzada (k-fold Cross Validation) en R. Recuperado de https://rpubs.com/rdelgado/405322#:~:text=La%20Validaci%C3%B3n%20Cruzada%20o%20k%2Dfold%20Cross%20Validation%20consiste%20en,un%20segundo%20conjunto%20de%20validaci%C3%B3n.
+#Rubén Fernández-Casal. (2019). CART con el paquete. Recuperado de https://rubenfcasal.github.io/aprendizaje_estadistico/cart-con-el-paquete-rpart.html
 
-install.packages("ggplot2")
-library(ggplot2)
+
+install.packages("plotly")
 install.packages("rattle")
+install.packages("dplyr")
+install.packages("ggplot2")
+
+library(dplyr)
+library(ggplot2)
 library(rpart)
 library(rpart.plot)
 library(rattle)
 library(RColorBrewer)
-install.packages("plotly")
 library(plotly)
 
 
@@ -139,7 +145,7 @@ data$Insulin <- ifelse(data$Insulin == 0, sample(1:100, nrow(data), replace = TR
 data$BMI <- ifelse(data$BMI == 0, sample(1:100, nrow(data), replace = TRUE), data$BMI)
 
 #---------------------------------------------------------
-rm(list = ls()) #me permite eliminar la memoria global
+#rm(list = ls()) #me permite eliminar la memoria global
 
 #Realizar clasificacion con RPART
 
@@ -224,7 +230,7 @@ pruned
 
 fancyRpartPlot(pruned)
 
-
+rpart.rules(pruned, style = "tall")
 
 prediccion <- predict(pruned, newdata = X_test, type = 'class')
 
