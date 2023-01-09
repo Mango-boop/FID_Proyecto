@@ -1,0 +1,58 @@
+---
+title: "K-Means Clustering"
+output: html_notebook
+---
+Instalamos los paquetes
+```{r}
+install.packages("cluster")
+install.packages("rattle")
+install.packages("NbClust")
+install.packages("tidyverse")
+install.packages("dplyr")
+install.packages("ggplot2")
+```
+Inicializo las librerias
+```{r}
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(cluster)
+library(rattle)
+library(NbClust)
+```
+Leemos el DF
+```{r}
+df_1 = read.csv('diabetes.csv')
+dim =dim(df_1)
+```
+Preprocesamiento--cambio las columnas chr por columnas int, asignando un valor a cada una y lo escalamos
+```{r}
+df_aux <-scale(df_1)
+df_aux
+```
+
+Usamos la libreria NbClust para obtener el numero potencial de clusters
+```{r}
+set.seed(1234)
+nc <- NbClust(df_aux,min.nc = 2,max.nc = 15,method = "kmeans")
+```
+Ejecutamos el algoritmo k_means
+Ponemos 2 clusters ya que NbClust nos dice que el mejor numero de clusters es 2, pero en este caso puede ser 3 o 8 también una buena opción. Elegir el valor que convenga
+```{r}
+kmeans2 <- kmeans(df_aux,centers = 2,nstart = 25)
+kmeans3 <- kmeans(df_aux,centers = 3,nstart = 25)
+kmeans8 <- kmeans(df_aux,centers = 8,nstart = 25)
+kmeans2
+kmeans3
+kmeans8
+clusplot(pam(df_aux,2))
+clusplot(pam(df_aux,3))
+clusplot(pam(df_aux,8))
+```
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
